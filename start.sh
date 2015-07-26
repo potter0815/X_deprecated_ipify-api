@@ -12,6 +12,7 @@ build()
 
   echo "fetch dependencies"
   go get github.com/julienschmidt/httprouter
+  go get github.com/potter0815/ipify-api/models
   go get github.com/rdegges/ipify-api/models
   go get github.com/rs/cors
 
