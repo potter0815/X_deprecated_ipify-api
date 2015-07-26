@@ -30,12 +30,6 @@ func GetIP(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	ip := net.ParseIP(strings.Split(r.Header.Get("X-Forwarded-For"), ",")[0]).String();
 
 	fmt.Println("WOOOOOOOOOOOO")
-<<<<<<< HEAD
-=======
-	fmt.Println("http.Request.RemoteAddr: ", r.RemoteAddr)
-	fmt.Println("r.Header.Get(\"X-Forwarded-For\")", r.Header.Get("X-Forwarded-For"))
->>>>>>> 010088955660a62cc4f2f753be1a3efbf47477a4
-
 	// We'll always grab the first IP address in the X-Forwarded-For header
 	// list.  We do this because this is always the *origin* IP address, which
 	// is the *true* IP of the user.  For more information on this, see the
