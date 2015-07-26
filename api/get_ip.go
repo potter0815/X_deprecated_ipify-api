@@ -30,7 +30,7 @@ func GetIP(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	ip := net.ParseIP(strings.Split(r.Header.Get("X-Forwarded-For"), ",")[0]).String()
 
 	fmt.Println("WOOOOOOOOOOOO")
-    fmt.Println("http.Request.RemoteAddr: ", r.RemoteAddr)
+	fmt.Println("http.Request.RemoteAddr: ", r.RemoteAddr)
 	fmt.Println("r.Header.Get(\"X-Forwarded-For\")", r.Header.Get("X-Forwarded-For"))
 
 	if len(ip) > 6 {
