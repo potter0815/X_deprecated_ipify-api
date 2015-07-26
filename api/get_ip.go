@@ -27,30 +27,25 @@ func GetIP(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		panic(err)
 	}
 	//useheader := false
-	ip := net.ParseIP(strings.Split(r.Header.Get("X-Forwarded-For"), ",")[0]).String()
+	ip := net.ParseIP(strings.Split(r.Header.Get("X-Forwarded-For"), ",")[0]).String();
 
 	fmt.Println("WOOOOOOOOOOOO")
-    fmt.Println("http.Request.RemoteAddr: ", r.RemoteAddr)
-	fmt.Println("r.Header.Get(\"X-Forwarded-For\")", r.Header.Get("X-Forwarded-For"))
 
+	// We'll always grab the first IP address in the X-Forwarded-For header
+	// list.  We do this because this is always the *origin* IP address, which
+	// is the *true* IP of the user.  For more information on this, see the
+	// Wikipedia page: https://en.wikipedia.org/wiki/X-Forwarded-For
+	// if no X-Forwarded-For header is present the ip is taken from http.Request.RemoteAddr
 	if len(ip) > 6 {
-		// We'll always grab the first IP address in the X-Forwarded-For header
-		// list.  We do this because this is always the *origin* IP address, which
-		// is the *true* IP of the user.  For more information on this, see the
-		// Wikipedia page: https://en.wikipedia.org/wiki/X-Forwarded-For
-
-		//ip = net.ParseIP(strings.Split(r.Header.Get("X-Forwarded-For"), ",")[0]).String()
-
 		fmt.Fprintln(os.Stderr, "WOOT:", r.Header.Get("X-Forwarded-For"))
 	} else {
-		//ip = net.ParseIP(strings.Split(r.RemoteAddr, ":")[0]).String()
+		fmt.Fprintln(os.Stderr, "r.RemoteAddr: ", r.RemoteAddr)
 		host, port, err := net.SplitHostPort(r.RemoteAddr)
 		if err != nil {
 			panic(err.Error())
 		}
 		ip = host
 		fmt.Fprintf(os.Stderr, "host - %s ; port - %s ;", host, port)
-		fmt.Fprintln(os.Stderr, "r.RemoteAddr: ", r.RemoteAddr)
 	}
 
 	// If the user specifies a 'format' querystring, we'll try to return the
